@@ -1,0 +1,7 @@
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer\bin\Debug\netstandard1.4\Xer.IocContainer.deps.json
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer\obj\Debug\netstandard1.4\Xer.IocContainer.AssemblyInfo.cs
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer\bin\Debug\netstandard1.4\Xer.IocContainer.dll
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer\bin\Debug\netstandard1.4\Xer.IocContainer.pdb
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer\obj\Debug\netstandard1.4\Xer.IocContainer.dll
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer\obj\Debug\netstandard1.4\Xer.IocContainer.pdb
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer\obj\Debug\netstandard1.4\Xer.IocContainer.csprojResolveAssemblyReference.cache

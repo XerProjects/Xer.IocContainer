@@ -1,0 +1,14 @@
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\xunit.runner.utility.netstandard15.dll
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\xunit.runner.reporters.netstandard15.dll
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\Xer.IocContainer.UnitTests.deps.json
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\Xer.IocContainer.UnitTests.runtimeconfig.json
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\Xer.IocContainer.UnitTests.runtimeconfig.dev.json
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\Xer.IocContainer.UnitTests.dll
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\Xer.IocContainer.UnitTests.pdb
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\Xer.IocContainer.dll
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\bin\Debug\netcoreapp1.1\Xer.IocContainer.pdb
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\obj\Debug\netcoreapp1.1\Xer.IocContainer.UnitTests.csprojResolveAssemblyReference.cache
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\obj\Debug\netcoreapp1.1\Xer.IocContainer.UnitTests.AssemblyInfo.cs
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\obj\Debug\netcoreapp1.1\Xer.IocContainer.UnitTests.dll
+c:\users\jeyjeyemem\documents\visual studio 2017\Projects\Xer.IocContainer\Xer.IocContainer.UnitTests\obj\Debug\netcoreapp1.1\Xer.IocContainer.UnitTests.pdb
