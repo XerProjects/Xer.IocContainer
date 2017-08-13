@@ -1,2 +1,4 @@
-bin/
-obj/
+Xer.IocContainer/bin/
+Xer.IocContainer/obj/
+Xer.IocContainer.UnitTests/bin/
+Xer.IocContainer.UnitTests/obj/
