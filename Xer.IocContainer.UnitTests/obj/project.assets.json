@@ -8539,10 +8539,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jeyjeyemem\\Documents\\Visual Studio 2017\\Projects\\Xer.IocContainer\\Xer.IocContainer.UnitTests\\Xer.IocContainer.UnitTests.csproj",
+      "projectUniqueName": "C:\\Users\\jeyjeyemem\\Documents\\GitHub\\Xer.IocContainer\\Xer.IocContainer.UnitTests\\Xer.IocContainer.UnitTests.csproj",
       "projectName": "Xer.IocContainer.UnitTests",
-      "projectPath": "C:\\Users\\jeyjeyemem\\Documents\\Visual Studio 2017\\Projects\\Xer.IocContainer\\Xer.IocContainer.UnitTests\\Xer.IocContainer.UnitTests.csproj",
-      "outputPath": "C:\\Users\\jeyjeyemem\\Documents\\Visual Studio 2017\\Projects\\Xer.IocContainer\\Xer.IocContainer.UnitTests\\obj\\",
+      "projectPath": "C:\\Users\\jeyjeyemem\\Documents\\GitHub\\Xer.IocContainer\\Xer.IocContainer.UnitTests\\Xer.IocContainer.UnitTests.csproj",
+      "outputPath": "C:\\Users\\jeyjeyemem\\Documents\\GitHub\\Xer.IocContainer\\Xer.IocContainer.UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"
@@ -8550,8 +8550,8 @@
       "frameworks": {
         "netcoreapp1.1": {
           "projectReferences": {
-            "C:\\Users\\jeyjeyemem\\Documents\\Visual Studio 2017\\Projects\\Xer.IocContainer\\Xer.IocContainer\\Xer.IocContainer.csproj": {
-              "projectPath": "C:\\Users\\jeyjeyemem\\Documents\\Visual Studio 2017\\Projects\\Xer.IocContainer\\Xer.IocContainer\\Xer.IocContainer.csproj"
+            "C:\\Users\\jeyjeyemem\\Documents\\GitHub\\Xer.IocContainer\\Xer.IocContainer\\Xer.IocContainer.csproj": {
+              "projectPath": "C:\\Users\\jeyjeyemem\\Documents\\GitHub\\Xer.IocContainer\\Xer.IocContainer\\Xer.IocContainer.csproj"
             }
           }
         }
