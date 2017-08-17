@@ -25,6 +25,11 @@ namespace Xer.IocContainer.Collections
             _storage = collection;
         }
 
+        public bool TryGetValue(TKey key, out TValue value)
+        {
+            return _storage.TryGetValue(key, out value);
+        }
+
         public void Add(TKey key, TValue value)
         {
             _storage.Add(key, value);
@@ -44,6 +49,11 @@ namespace Xer.IocContainer.Collections
             _storage.TryGetValue(key, out value);
 
             return value;
+        }
+
+        public bool Remove(TKey key)
+        {
+            return _storage.Remove(key);
         }
 
         IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()

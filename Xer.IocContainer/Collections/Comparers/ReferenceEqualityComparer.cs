@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace Xer.IocContainer.Collections
 {
-    internal class EqualityComparerBase<T> : IEqualityComparer<T>
+    internal class ReferenceEqualityComparer<T> : IEqualityComparer<T>
     {
-        private class Singleton<T>
+        private class Singleton<TSingleton>
         {
             static Singleton()
             {
             }
 
-            public static EqualityComparerBase<T> SingletonInstance = new EqualityComparerBase<T>();
+            public readonly static ReferenceEqualityComparer<TSingleton> SingletonInstance = new ReferenceEqualityComparer<TSingleton>();
         }
 
-        protected EqualityComparerBase()
+        protected ReferenceEqualityComparer()
         {
         }
 
-        public static EqualityComparerBase<T> Instance
+        public static ReferenceEqualityComparer<T> Instance
         {
             get { return Singleton<T>.SingletonInstance; }
         }

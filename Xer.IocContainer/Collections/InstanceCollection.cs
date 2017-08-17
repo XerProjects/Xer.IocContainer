@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Xer.IocContainer.Collections
 {
-    internal class SingletonInstanceCollection : KeyValueCollectionBase<Type, object>
+    internal class InstanceCollection<TKey> : KeyValueCollectionBase<TKey, object>
     {
-        protected override IEqualityComparer<Type> KeyEqualityComparer => TypeEqualityComparer.Instance;
+        protected override IEqualityComparer<TKey> KeyEqualityComparer => ReferenceEqualityComparer<TKey>.Instance;
     }
 }

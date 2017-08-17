@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Xer.IocContainer.Registrations
 {
-    internal enum RegistrationType
+    public enum InstanceLifetime
     {
         Singleton,
         Transient,

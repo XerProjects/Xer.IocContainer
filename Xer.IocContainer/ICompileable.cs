@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Xer.IocContainer
 {
-    internal interface ICompileable
+    public interface ICompileable
     {
         bool IsCompiled { get; }
         void Compile();

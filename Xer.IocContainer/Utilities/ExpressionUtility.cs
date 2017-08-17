@@ -10,12 +10,17 @@ namespace Xer.IocContainer.Utilities
 {
     internal static class ExpressionUtility
     {
-        internal static MethodCallExpression GetMethodCallExpression<T>(Expression<Func<T>> exp)
+        internal static MethodCallExpression GetMethodCallExpression<T>(this Expression<Func<T>> exp)
         {
             return exp.Body as MethodCallExpression;
         }
 
-        internal static MethodInfo GetMethodInfo<T>(Expression<Action<T>> exp)
+        internal static Expression CastTo(this Expression expression, Type castTo)
+        {
+            return Expression.Convert(expression, castTo);
+        }
+
+        internal static MethodInfo GetMethodInfo<T>(this Expression<Action<T>> exp)
         {
             var member = exp.Body as MethodCallExpression;
             if (member != null)

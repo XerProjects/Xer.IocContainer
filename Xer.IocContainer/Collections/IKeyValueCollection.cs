@@ -11,7 +11,9 @@ namespace Xer.IocContainer.Collections
         TValue this[TKey key] { get; }
         int Count { get; }
 
+        bool TryGetValue(TKey key, out TValue value);
         void Add(TKey key, TValue value);
         bool Contains(TKey key);
+        bool Remove(TKey key);
     }
 }

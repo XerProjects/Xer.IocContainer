@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Xer.IocContainer
 {
-    public class XerContainerBuilder
+    public class XerContainerBuilder : IRegistry
     {
-        private List<Action<XerContainer>> _registrationBuilders;
         private readonly XerContainer _container;
 
         /// <summary>
@@ -17,35 +16,60 @@ namespace Xer.IocContainer
         /// <param name="options">Container options.</param>
         public XerContainerBuilder(ContainerOptions options)
         {
-            _registrationBuilders = new List<Action<XerContainer>>();
             _container = new XerContainer(options);
         }
 
-        /// <summary>
-        /// Register types to the registration manager.
-        /// </summary>
-        /// <param name="registrationBuilder">Action to register types to the registration manager.</param>
-        /// <returns>Same instance of this container builder.</returns>
-        public XerContainerBuilder Configure(Action<IRegistrar> registrationBuilder)
+        public void RegisterSingleton<TConcrete>() where TConcrete : class
         {
-            _registrationBuilders.Add(registrationBuilder);
-
-            return this;
+            _container.RegisterSingleton<TConcrete>();
         }
 
-        //public T Configure<T>(Func<IRegistrationManager, T> registrationBuilder)
-        //{
-        //    return registrationBuilder.Invoke(_container);
-        //}
+        public void RegisterSingleton<TContract, TConcrete>() where TConcrete : class, TContract
+        {
+            _container.RegisterSingleton<TContract, TConcrete>();
+        }
+
+        public void RegisterSingleton(Type contractType, Type concreteType)
+        {
+            _container.RegisterSingleton(contractType, concreteType);
+        }
+
+        public void RegisterSingleton<TContract>(object instance)
+        {
+            _container.RegisterSingleton(typeof(TContract), instance);
+        }
+
+        public void RegisterSingleton(object instance)
+        {
+            _container.RegisterSingleton(instance);
+        }
+
+        public void RegisterSingleton(Type instanceType, object instance)
+        {
+            _container.RegisterSingleton(instanceType, instance);
+        }
+
+        public void RegisterTransient<TConcrete>() where TConcrete : class
+        {
+            _container.RegisterTransient<TConcrete>();
+        }
+
+        public void RegisterTransient<TContract, TConcrete>() where TConcrete : class, TContract
+        {
+            _container.RegisterTransient<TContract, TConcrete>();
+        }
+
+        public void RegisterTransient(Type contractType, Type concreteType)
+        {
+            _container.RegisterTransient(contractType, concreteType);
+        }
 
         /// <summary>
-        /// Create and compile the container.
+        /// Create the container.
         /// </summary>
-        /// <returns>Instance of the compiled container.</returns>
+        /// <returns>Instance of the container.</returns>
         public XerContainer BuildContainer()
         {
-            _registrationBuilders.ForEach(cm => cm.Invoke(_container));
-
             // Compile.
             _container.Compile();
 

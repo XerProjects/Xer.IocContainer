@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Xer.IocContainer
 {
-    public interface IRegistrar
+    public interface IRegistry
     {
         void RegisterSingleton<TConcrete>() where TConcrete : class;
         void RegisterSingleton<TContract, TConcrete>() where TConcrete : class, TContract;

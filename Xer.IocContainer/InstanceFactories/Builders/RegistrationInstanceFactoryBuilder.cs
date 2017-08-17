@@ -19,6 +19,7 @@ namespace Xer.IocContainer.InstanceFactories.Builders
         public IInstanceFactory BuildInstanceFactory()
         {
             return new RegistrationInstanceFactory(_registration);
+            //return new ScopedRegistrationInstanceFactory(_registration);
         }
     }
 }

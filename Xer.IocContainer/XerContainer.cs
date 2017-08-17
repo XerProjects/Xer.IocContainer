@@ -8,12 +8,31 @@ using Xer.IocContainer.Registrations;
 using Xer.IocContainer.Collections;
 using System.Threading.Tasks;
 using System.Reflection;
+using Xer.IocContainer.LifetimeScopes;
 
 namespace Xer.IocContainer
 {
-    public class XerContainer : IRegistrar, IResolver, ICompileable
+    public class XerContainer : IResolver, IDisposable
     {
-        private readonly RegistrationCollection _registrations;
+        /// <summary>
+        /// Name of singleton lifetime scope of this container.
+        /// </summary>
+        internal static readonly string SingletonLifetimeScopeName = "XerContainerSingletonScope";
+
+        /// <summary>
+        /// Registrations.
+        /// </summary>
+        private readonly RegistrationCollection _registrations = new RegistrationCollection();
+
+        /// <summary>
+        /// Container's singleton intances.
+        /// </summary>
+        internal LifetimeScope SingletonScope { get; }
+
+        /// <summary>
+        /// Manages scopes.
+        /// </summary>
+        internal LifetimeScopeManager LifetimeScopeManager { get; }
 
         /// <summary>
         /// Options.
@@ -29,10 +48,8 @@ namespace Xer.IocContainer
         /// Default constructor.
         /// </summary>
         public XerContainer()
+            : this(new ContainerOptions())
         {
-            _registrations = new RegistrationCollection();
-
-            Options = new ContainerOptions();
         }
 
         /// <summary>
@@ -41,22 +58,10 @@ namespace Xer.IocContainer
         /// <param name="options">Container options.</param>
         public XerContainer(ContainerOptions options)
         {
-            _registrations = new RegistrationCollection();
-
             Options = options;
-        }
-
-        public static XerContainer Create(Action<IRegistrar> configure, ContainerOptions options)
-        {
-            XerContainer container = new XerContainer(options);
-
-            // Configure.
-            configure.Invoke(container);
-
-            // Compile.
-            container.Compile();
-
-            return container;
+            
+            LifetimeScopeManager = new LifetimeScopeManager(this);
+            SingletonScope = LifetimeScopeManager.CreateScope(SingletonLifetimeScopeName);
         }
 
         #region Resolve
@@ -68,9 +73,7 @@ namespace Xer.IocContainer
         /// <returns>Instance of the specified type. This will return null if type is not registered.</returns>
         public TContract Resolve<TContract>()
         {
-            Type type = typeof(TContract);
-
-            return (TContract)Resolve(type);
+            return (TContract)Resolve(typeof(TContract));
         }
 
         /// <summary>
@@ -80,10 +83,11 @@ namespace Xer.IocContainer
         /// <returns>Instance of the specified type. This will return null if type is not registered.</returns>
         public object Resolve(Type contractType)
         {
-            IRegistration registration = _registrations[contractType];
+            IRegistration registration;
 
-            if (registration == null)
+            if (!_registrations.TryGetValue(contractType, out registration))
             {
+                // Not registered.
                 return null;
             }
 
@@ -98,7 +102,7 @@ namespace Xer.IocContainer
         /// Register object of given type as singleton.
         /// </summary>
         /// <typeparam name="TConcrete">Type which will be used in resolving an instance of this object.</typeparam>
-        public void RegisterSingleton<TConcrete>() where TConcrete : class
+        internal void RegisterSingleton<TConcrete>() where TConcrete : class
         {
             Type concreteType = typeof(TConcrete);
 
@@ -110,16 +114,17 @@ namespace Xer.IocContainer
         /// </summary>
         /// <typeparam name="TContract">Interface which will be used in resolving an instance of this object.</typeparam>
         /// <typeparam name="TConcrete">Type which implements TContract.</typeparam>
-        public void RegisterSingleton<TContract, TConcrete>() where TConcrete : class, TContract
+        internal void RegisterSingleton<TContract, TConcrete>() where TConcrete : class, TContract
         {
             RegisterSingleton(typeof(TContract), typeof(TConcrete));
         }
+
         /// <summary>
         /// Register object of given types as singleton.
         /// </summary>
         /// <param name="contractType">Type which will be used in resolving an instance of this object.</param>
         /// <param name="concreteType">Type which implements TContract.</param>
-        public void RegisterSingleton(Type contractType, Type concreteType)
+        internal void RegisterSingleton(Type contractType, Type concreteType)
         {
             if (!isTypeAssignableFrom(concreteType, contractType))
             {
@@ -132,18 +137,18 @@ namespace Xer.IocContainer
         /// <summary>
         /// Register given instance as singleton.
         /// </summary>
-        /// <typeparam name="IContract">Interface which will be used in resolving the instance.</typeparam>
+        /// <typeparam name="TContract">Interface which will be used in resolving the instance.</typeparam>
         /// <param name="instance">Instance of the given TContract.</param>
-        public void RegisterSingleton<IContract>(object instance)
+        internal void RegisterSingleton<TContract>(object instance)
         {
-            RegisterSingleton(typeof(IContract), instance);
+            RegisterSingleton(typeof(TContract), instance);
         }
 
         /// <summary>
         /// Register given instance as singleton. An instance of this object can be resolved using its type.
         /// </summary>
         /// <param name="instance">Instance to register.</param>
-        public void RegisterSingleton(object instance)
+        internal void RegisterSingleton(object instance)
         {
             RegisterSingleton(instance.GetType(), instance);
         }
@@ -153,7 +158,7 @@ namespace Xer.IocContainer
         /// </summary>
         /// <param name="contractType">Type which will be used in resolving the instance.</param>
         /// <param name="instance">Instance to register.</param>
-        public void RegisterSingleton(Type contractType, object instance)
+        internal void RegisterSingleton(Type contractType, object instance)
         {
             if (instance == null)
             {
@@ -176,7 +181,7 @@ namespace Xer.IocContainer
         /// Register object of given type as transient.
         /// </summary>
         /// <typeparam name="TConcrete">Type which will be used in resolving an instance.</typeparam>
-        public void RegisterTransient<TConcrete>() where TConcrete : class
+        internal void RegisterTransient<TConcrete>() where TConcrete : class
         {
             Type concreteType = typeof(TConcrete);
 
@@ -188,7 +193,7 @@ namespace Xer.IocContainer
         /// </summary>
         /// <typeparam name="TContract">Interface which will be used in resolving an instance.</typeparam>
         /// <typeparam name="TConcrete">Type which implements TContract.</typeparam>
-        public void RegisterTransient<TContract, TConcrete>() where TConcrete : class, TContract
+        internal void RegisterTransient<TContract, TConcrete>() where TConcrete : class, TContract
         {
             RegisterTransient(typeof(TContract), typeof(TConcrete));
         }
@@ -198,7 +203,7 @@ namespace Xer.IocContainer
         /// </summary>
         /// <param name="contractType">Type which will be used in resolving an instance.</param>
         /// <param name="concreteType">Type which implements TContract.</param>
-        public void RegisterTransient(Type contractType, Type concreteType)
+        internal void RegisterTransient(Type contractType, Type concreteType)
         {
             if (!isTypeAssignableFrom(concreteType, contractType))
             {
@@ -217,7 +222,7 @@ namespace Xer.IocContainer
         /// we need to compile the container to build the internal instance factories,
         /// which are responsible in generating instances.
         /// </summary>
-        public void Compile()
+        internal void Compile()
         {
             foreach (IRegistration registration in _registrations)
             {
@@ -227,30 +232,20 @@ namespace Xer.IocContainer
                 }
             }
 
-            //Parallel.ForEach(_registrations,
-            //                 new ParallelOptions() { MaxDegreeOfParallelism = 50 },
-            //                 reg =>
-            //                 {
-            //                     if (!reg.IsCompiled)
-            //                     {
-            //                         reg.Compile();
-            //                     }
-            //                 });
-
             // Set to compiled.
             IsCompiled = true;
         }
 
         #endregion Compile
 
-        #region Internal Methods
+        #region Registrations
 
         /// <summary>
         /// Get internal registration.
         /// </summary>
         /// <param name="contractType">Registered type of the registration.</param>
         /// <returns>Instance of registration.</returns>
-        internal IRegistration GetRegistration(Type contractType)
+        public IRegistration GetRegistration(Type contractType)
         {
             return _registrations[contractType];
         }
@@ -260,12 +255,26 @@ namespace Xer.IocContainer
         /// </summary>
         /// <typeparam name="TRegistered">Registered type of the registration.</typeparam>
         /// <returns>Instance of registration.</returns>
-        internal IRegistration GetRegistration<TRegistered>()
+        public IRegistration GetRegistration<TRegistered>()
         {
             return _registrations[typeof(TRegistered)];
         }
 
-        #endregion Internal Methods
+        #endregion Registrations
+
+        #region Lifetime Scope
+
+        public LifetimeScope BeginLifetimeScope()
+        {
+            return LifetimeScopeManager.CreateScope(DateTime.Now.Ticks.GetHashCode().ToString());
+        }
+
+        public LifetimeScope BeginLifetimeScope(string scopeName)
+        {
+            return LifetimeScopeManager.CreateScope(scopeName);
+        }
+
+        #endregion Lifetime Scope
 
         #region Functions
 
@@ -307,6 +316,16 @@ namespace Xer.IocContainer
         private bool isTypeAssignableFrom(Type to, Type from)
         {
             return from != to && !to.GetTypeInfo().IsAssignableFrom(from.GetTypeInfo());
+        }
+
+        public void Dispose()
+        {
+            // TODO: Dispose.
+
+            foreach(IRegistration registration in _registrations)
+            {
+                registration.Dispose();
+            }
         }
 
         #endregion Functions

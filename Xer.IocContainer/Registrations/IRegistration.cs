@@ -5,15 +5,22 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xer.IocContainer.InstanceFactories;
+using Xer.IocContainer.LifetimeScopes;
+using Xer.IocContainer.Registrations.Dependencies;
 
 namespace Xer.IocContainer.Registrations
 {
-    internal interface IRegistration : ICompileable
+    public interface IRegistration : ICompileable, IDisposable
     {
         /// <summary>
-        /// Constructor of this registered object.
+        /// Selected constructor of this registered object.
         /// </summary>
         ConstructorInfo Constructor { get; }
+
+        /// <summary>
+        /// Properties of this registered object that are selected for injection.
+        /// </summary>
+        IReadOnlyList<PropertyInfo> InjectableProperties { get; }
 
         /// <summary>
         /// Registered type of this registered object.
@@ -21,30 +28,58 @@ namespace Xer.IocContainer.Registrations
         Type RegisteredType { get; }
 
         /// <summary>
+        /// Contract's Type Info.
+        /// </summary>
+        TypeInfo RegisteredTypeInfo { get; }
+
+        /// <summary>
         /// Implementation type of this registered object.
         /// </summary>
         Type ImplementationType { get; }
 
         /// <summary>
-        /// Constructor dependencies of this registered object.
+        /// Implementation's Type Info.
         /// </summary>
-        IReadOnlyList<Type> ConstructorArgumentTypes { get; }
+        TypeInfo ImplementationTypeInfo { get; }
 
         /// <summary>
-        /// Registrations of this object's dependencies.
+        /// Registration's constructor dependencies as determined by the configured IDependencySelector<ConstructorDependency>
         /// </summary>
-        IReadOnlyList<IRegistration> DependencyRegistrations { get; }
+        IReadOnlyList<ConstructorDependency> ConstructorDependencies { get; }
+
+        /// <summary>
+        /// Registration's property dependencies as determined by the configured IDependencySelector<PropertyDependency>
+        /// </summary>
+        IReadOnlyList<PropertyDependency> PropertyDependencies { get; }
+
+        /// <summary>
+        /// Creates an instance of this registration.
+        /// </summary>
+        IInstanceFactory InstanceFactory { get; }
 
         /// <summary>
         /// Registration type.
         /// </summary>
-        RegistrationType RegistrationType { get; }
+        InstanceLifetime InstanceLifetime { get; }
+
+        /// <summary>
+        /// Manages lifetime of this registration's instances.
+        /// </summary>
+        //LifetimeScope LifetimeScope { get; }
+
+        /// <summary>
+        /// Owning container.
+        /// </summary>
+        XerContainer Container { get; }
 
         /// <summary>
         /// Get an instance of this registered object.
         /// </summary>
-        /// <param name="resolver">Object resolver that is used to resolve dependencies.</param>
-        /// <returns>Instance of this registered object.</returns>
         object GetInstance();
+        
+        /// <summary>
+        /// Get an instance of this registered object from scope, if available.
+        /// </summary>
+        //object GetInstance(LifetimeScope lifetimeScope);
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Xer.IocContainer.Collections
 {
-    internal class TypeEqualityComparer : EqualityComparerBase<Type>
+    internal class TypeEqualityComparer : ReferenceEqualityComparer<Type>
     {
         public override bool Equals(Type x, Type y)
         {
